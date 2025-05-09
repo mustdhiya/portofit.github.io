@@ -1,0 +1,1078 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio Fitri Nur Andriyani</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <style>
+        :root {
+            --pink-light: #FBD8DE;
+            --pink-medium: #F3ACC1;
+            --purple-light: #F8B0CC;
+            --purple-medium: #DE4EA5;
+            --white: #FEFDFD;
+            --mint: #C7F0DB;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background-color: var(--white);
+            color: #333;
+            overflow-x: hidden;
+        }
+        
+        h1, h2, h3, h4 {
+            font-family: 'Montserrat', sans-serif;
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, var(--pink-light) 0%, var(--purple-light) 100%);
+        }
+        
+        .profile-img {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            border: 8px solid white;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            object-fit: cover;
+            background-color: var(--pink-medium);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 64px;
+            font-weight: bold;
+            z-index: 10;
+            position: relative;
+        }
+        
+        .floating-hearts {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            pointer-events: none;
+            z-index: 0;
+        }
+        
+        .heart {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23F3ACC1'%3E%3Cpath d='M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z'/%3E%3C/svg%3E") no-repeat center center;
+            opacity: 0.7;
+            animation: float-up 15s linear infinite;
+        }
+        
+        @keyframes float-up {
+            0% {
+                transform: translateY(100vh) scale(0.5) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.7;
+            }
+            90% {
+                opacity: 0.7;
+            }
+            100% {
+                transform: translateY(-100px) scale(1.2) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        
+        .section-title {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 2rem;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 60%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--purple-medium), var(--pink-medium));
+            border-radius: 2px;
+        }
+        
+        .skill-card {
+            background-color: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            height: 100%;
+            border: 2px solid transparent;
+        }
+        
+        .skill-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(222, 78, 165, 0.2);
+            border-color: var(--pink-medium);
+        }
+        
+        .skill-card:hover .skill-icon {
+            transform: scale(1.1);
+        }
+        
+        .skill-card:hover .skill-heart {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
+        }
+        
+        .skill-icon {
+            width: 50px;
+            height: 50px;
+            margin-bottom: 1rem;
+            transition: transform 0.3s ease;
+        }
+        
+        .skill-heart {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            width: 24px;
+            height: 24px;
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23DE4EA5'%3E%3Cpath d='M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z'/%3E%3C/svg%3E") no-repeat center center;
+            opacity: 0;
+            transform: translate(-50%, -50%) scale(0.5);
+            transition: all 0.3s ease;
+        }
+        
+        .experience-item {
+            position: relative;
+            padding-left: 30px;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-left: 2px dashed var(--pink-medium);
+        }
+        
+        .experience-item:last-child {
+            border-left: 2px dashed transparent;
+        }
+        
+        .experience-dot {
+            position: absolute;
+            left: -10px;
+            top: 0;
+            width: 20px;
+            height: 20px;
+            background-color: var(--purple-medium);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .experience-dot::before {
+            content: '';
+            width: 10px;
+            height: 10px;
+            background-color: white;
+            border-radius: 50%;
+        }
+        
+        .contact-btn {
+            background: linear-gradient(135deg, var(--purple-medium) 0%, var(--pink-medium) 100%);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .contact-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(222, 78, 165, 0.3);
+        }
+        
+        .contact-btn:hover .btn-heart {
+            animation: pulse 1s infinite;
+        }
+        
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.2);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+        
+        .education-card {
+            border-radius: 12px;
+            padding: 1.5rem;
+            background-color: white;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            border-left: 4px solid var(--purple-medium);
+        }
+        
+        .education-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(222, 78, 165, 0.2);
+        }
+        
+        .hobby-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 1rem;
+            padding: 10px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+        
+        .hobby-item:hover {
+            background-color: var(--pink-light);
+        }
+        
+        .hobby-icon {
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--purple-light);
+            border-radius: 50%;
+            color: white;
+        }
+        
+        .language-progress {
+            height: 10px;
+            background-color: var(--pink-light);
+            border-radius: 5px;
+            margin-top: 5px;
+            overflow: hidden;
+        }
+        
+        .language-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--purple-medium), var(--pink-medium));
+            border-radius: 5px;
+            transition: width 1.5s ease;
+        }
+        
+        .scroll-reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 1s ease;
+        }
+        
+        .scroll-reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Three.js Canvas Styling */
+        #butterfly-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+        }
+        
+        .header-content {
+            position: relative;
+            z-index: 10;
+        }
+        
+        /* Photo Gallery Styles */
+        .gallery-container {
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(222, 78, 165, 0.2);
+        }
+        
+        .gallery-slide {
+            display: none;
+            width: 100%;
+            height: 400px;
+            position: relative;
+        }
+        
+        .gallery-slide.active {
+            display: block;
+            animation: fadeIn 1s ease-in-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .gallery-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 16px;
+        }
+        
+        .gallery-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+            color: white;
+            padding: 20px;
+            border-bottom-left-radius: 16px;
+            border-bottom-right-radius: 16px;
+        }
+        
+        .gallery-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 50px;
+            height: 50px;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 24px;
+            color: var(--purple-medium);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+        
+        .gallery-nav:hover {
+            background-color: white;
+            transform: translateY(-50%) scale(1.1);
+        }
+        
+        .gallery-prev {
+            left: 20px;
+        }
+        
+        .gallery-next {
+            right: 20px;
+        }
+        
+        .gallery-dots {
+            position: absolute;
+            bottom: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 8px;
+            z-index: 10;
+        }
+        
+        .gallery-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .gallery-dot.active {
+            background-color: white;
+            transform: scale(1.2);
+        }
+        
+        /* Heart frame for photos */
+        .heart-frame {
+            position: absolute;
+            top: -20px;
+            left: -20px;
+            width: calc(100% + 40px);
+            height: calc(100% + 40px);
+            pointer-events: none;
+            z-index: 5;
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' fill='none' stroke='%23DE4EA5' stroke-width='2'%3E%3Cpath d='M10,30 C10,20 20,10 30,10 C45,10 50,25 50,25 C50,25 55,10 70,10 C80,10 90,20 90,30 C90,50 50,80 50,80 C50,80 10,50 10,30 Z' /%3E%3C/svg%3E") no-repeat;
+            background-position: center;
+            background-size: 100% 100%;
+            opacity: 0.5;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Section with Three.js Butterfly Animation -->
+    <header class="relative gradient-bg min-h-[500px] flex items-center justify-center overflow-hidden">
+        <canvas id="butterfly-canvas"></canvas>
+        
+        <div class="floating-hearts">
+            <!-- Hearts will be added with JavaScript -->
+        </div>
+        
+        <div class="container mx-auto px-4 py-16 relative z-10 text-center header-content">
+            <div class="flex flex-col items-center justify-center">
+                <div class="profile-img mb-6 mx-auto">
+                    <img class="profile-img mb-2 mx-auto" src="profile.png">
+                </div>
+                <h1 class="text-4xl md:text-5xl font-bold text-white mb-2">Fitri Nur Andriyani</h1>
+                <p class="text-xl text-white/90 mb-6">Passionate, Dedicated, and Ready to Contribute</p>
+                <div class="flex gap-4 justify-center">
+                    <a href="#about" class="contact-btn">
+                        <span>Tentang Saya</span>
+                        <span class="btn-heart">❤️</span>
+                    </a>
+                    <a href="#contact" class="bg-white text-[#DE4EA5] px-6 py-3 rounded-full font-semibold transition-all hover:shadow-lg hover:-translate-y-1">
+                        Hubungi Saya
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Photo Gallery Section -->
+    <section id="gallery" class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="section-title text-3xl font-bold text-[#DE4EA5] text-center mb-12">Galeri Foto</h2>
+            
+            <div class="max-w-4xl mx-auto scroll-reveal">
+                <div class="gallery-container">
+                    <!-- Heart-shaped frame overlay -->
+                    <div class="heart-frame"></div>
+                    
+                    <!-- Slide 1 -->
+                    <div class="gallery-slide active">
+                        <div class="gallery-img bg-gradient-to-r from-[#F3ACC1] to-[#DE4EA5] flex items-center justify-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 24 24" fill="white">
+                                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                            </svg>
+                        </div>
+                        <div class="gallery-caption">
+                            <h3 class="text-xl font-semibold mb-1">Momen Spesial</h3>
+                            <p>Berbagi kebahagiaan bersama teman-teman di acara spesial</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Slide 2 -->
+                    <div class="gallery-slide">
+                        <div class="gallery-img bg-gradient-to-r from-[#F8B0CC] to-[#C7F0DB] flex items-center justify-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 24 24" fill="white">
+                                <path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V6h16v12zM6 10h2v2H6zm0 4h8v2H6zm10 0h2v2h-2zm-6-4h8v2h-8z"/>
+                            </svg>
+                        </div>
+                        <div class="gallery-caption">
+                            <h3 class="text-xl font-semibold mb-1">Pengalaman Kerja</h3>
+                            <p>Dokumentasi pengalaman kerja di berbagai tempat</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Slide 3 -->
+                    <div class="gallery-slide">
+                        <div class="gallery-img bg-gradient-to-r from-[#DE4EA5] to-[#F8B0CC] flex items-center justify-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 24 24" fill="white">
+                                <path d="M12 3L1 9l4 2.18v6L12 21l7-3.82v-6l2-1.09V17h2V9L12 3zm6.82 6L12 12.72 5.18 9 12 5.28 18.82 9zM17 15.99l-5 2.73-5-2.73v-3.72L12 15l5-2.73v3.72z"/>
+                            </svg>
+                        </div>
+                        <div class="gallery-caption">
+                            <h3 class="text-xl font-semibold mb-1">Pendidikan</h3>
+                            <p>Perjalanan pendidikan dan pembelajaran</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Slide 4 -->
+                    <div class="gallery-slide">
+                        <div class="gallery-img bg-gradient-to-r from-[#C7F0DB] to-[#F3ACC1] flex items-center justify-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 24 24" fill="white">
+                                <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27z"/>
+                            </svg>
+                        </div>
+                        <div class="gallery-caption">
+                            <h3 class="text-xl font-semibold mb-1">Prestasi</h3>
+                            <p>Pencapaian dan penghargaan yang telah diraih</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Slide 5 -->
+                    <div class="gallery-slide">
+                        <div class="gallery-img bg-gradient-to-r from-[#F3ACC1] to-[#F8B0CC] flex items-center justify-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 24 24" fill="white">
+                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"/>
+                            </svg>
+                        </div>
+                        <div class="gallery-caption">
+                            <h3 class="text-xl font-semibold mb-1">Hobi & Minat</h3>
+                            <p>Aktivitas yang disukai di waktu luang</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Navigation Arrows -->
+                    <div class="gallery-prev gallery-nav">❮</div>
+                    <div class="gallery-next gallery-nav">❯</div>
+                    
+                    <!-- Navigation Dots -->
+                    <div class="gallery-dots">
+                        <div class="gallery-dot active" data-slide="0"></div>
+                        <div class="gallery-dot" data-slide="1"></div>
+                        <div class="gallery-dot" data-slide="2"></div>
+                        <div class="gallery-dot" data-slide="3"></div>
+                        <div class="gallery-dot" data-slide="4"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-16 bg-[#FBD8DE]/20">
+        <div class="container mx-auto px-4">
+            <div class="max-w-3xl mx-auto scroll-reveal">
+                <h2 class="section-title text-3xl font-bold text-[#DE4EA5]">Tentang Saya</h2>
+                <div class="bg-white p-6 rounded-lg border border-[#F3ACC1]/30 shadow-sm">
+                    <p class="mb-4 leading-relaxed">
+                        Saya Fitri Nur Andriyani, meskipun bukan mahasiswa atau fresh graduate, namun saya sangat tertarik untuk mengajukan lamaran kerja di perusahaan Anda. Salah satu alasan utama saya tertarik untuk bekerja di perusahaan Anda adalah karena lokasi rumah saya yang dekat dengan lokasi perusahaan. Hal ini akan memungkinkan saya untuk lebih tepat waktu dalam memenuhi kewajiban kerja, serta memperkecil kemungkinan terjadinya keterlambatan dan absensi yang tidak diinginkan.
+                    </p>
+                    <p class="mb-4 leading-relaxed">
+                        Saya memiliki pengalaman kerja yang bervariasi, termasuk di stand minuman, kebab Cendana, dan Tokkebi di Bigmall Samarinda, yang telah memperkuat keterampilan komunikasi dan kerja tim saya. Saat ini, saya sedang mencari kesempatan untuk mendapatkan pengalaman kerja yang dapat mendukung kebutuhan pendidikan saya di masa depan. Meskipun belum memenuhi kriteria sebagai mahasiswa atau fresh graduate, saya memiliki komitmen yang kuat untuk melanjutkan pendidikan saya ke jenjang yang lebih tinggi. Oleh karena itu, saya ingin memanfaatkan kesempatan ini untuk mengumpulkan dana yang diperlukan untuk membayar biaya sekolah.
+                    </p>
+                    <p class="mb-4 leading-relaxed">
+                        Saya yakin bahwa keterampilan dan dedikasi saya dapat menjadi aset yang berharga bagi perusahaan Anda. Saya memiliki kemampuan untuk belajar dengan cepat, adaptasi yang baik terhadap lingkungan kerja baru, dan motivasi yang tinggi untuk memberikan yang terbaik dalam setiap tugas yang saya emban. Saya siap untuk ditempatkan di posisi mana pun yang sesuai dengan kualifikasi dan kebutuhan perusahaan.
+                    </p>
+                    <p class="leading-relaxed">
+                        Terima kasih atas perhatian Anda terhadap lamaran kerja saya. Saya sangat berharap untuk mendapatkan kesempatan untuk bergabung dengan tim Anda dan berkontribusi pada kesuksesan perusahaan. Saya melampirkan resume saya untuk informasi lebih lanjut. Saya menantikan kesempatan untuk dapat bertemu dengan Anda dan membahas lebih lanjut bagaimana saya dapat berkontribusi pada perusahaan Anda.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="section-title text-3xl font-bold text-[#DE4EA5] text-center mb-12">Keahlian</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Skill 1 -->
+                <div class="scroll-reveal">
+                    <div class="skill-card relative">
+                        <div class="skill-heart"></div>
+                        <div class="skill-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="#DE4EA5" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-2 text-[#DE4EA5]">Pembuatan Sediaan Farmasi</h3>
+                        <p class="text-gray-600">Mampu melakukan pembuatan sediaan farmasi dengan teliti dan sesuai standar.</p>
+                    </div>
+                </div>
+                
+                <!-- Skill 2 -->
+                <div class="scroll-reveal" style="transition-delay: 0.2s;">
+                    <div class="skill-card relative">
+                        <div class="skill-heart"></div>
+                        <div class="skill-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="#DE4EA5" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-2 text-[#DE4EA5]">Bahasa Indonesia</h3>
+                        <p class="text-gray-600">Mampu menggunakan bahasa lisan dan tulisan dalam bahasa Indonesia dengan baik dan benar.</p>
+                    </div>
+                </div>
+                
+                <!-- Skill 3 -->
+                <div class="scroll-reveal" style="transition-delay: 0.4s;">
+                    <div class="skill-card relative">
+                        <div class="skill-heart"></div>
+                        <div class="skill-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="#DE4EA5" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-2 text-[#DE4EA5]">Menulis Copy Resep</h3>
+                        <p class="text-gray-600">Terampil dalam menulis copy resep dengan akurat dan rapi.</p>
+                    </div>
+                </div>
+                
+                <!-- Skill 4 -->
+                <div class="scroll-reveal" style="transition-delay: 0.6s;">
+                    <div class="skill-card relative">
+                        <div class="skill-heart"></div>
+                        <div class="skill-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="#DE4EA5" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-2 text-[#DE4EA5]">Merekap Hasil Kasir</h3>
+                        <p class="text-gray-600">Mampu merekap hasil kasir dengan teliti dan sistematis.</p>
+                    </div>
+                </div>
+                
+                <!-- Skill 5 -->
+                <div class="scroll-reveal" style="transition-delay: 0.8s;">
+                    <div class="skill-card relative">
+                        <div class="skill-heart"></div>
+                        <div class="skill-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="#DE4EA5" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" />
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-2 text-[#DE4EA5]">Kasir</h3>
+                        <p class="text-gray-600">Berpengalaman menjadi kasir dengan pelayanan yang ramah dan efisien.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section id="experience" class="py-16 bg-[#FBD8DE]/20">
+        <div class="container mx-auto px-4">
+            <h2 class="section-title text-3xl font-bold text-[#DE4EA5] mb-12">Pengalaman Kerja</h2>
+            
+            <div class="max-w-3xl mx-auto">
+                <!-- Experience 1 -->
+                <div class="experience-item scroll-reveal">
+                    <div class="experience-dot"></div>
+                    <div class="ml-6">
+                        <h3 class="text-xl font-semibold text-[#DE4EA5]">Stand Minuman</h3>
+                        <p class="text-gray-500 mb-2">2020 - 2021</p>
+                        <p class="text-gray-600">Bertanggung jawab untuk menyiapkan dan menyajikan minuman, melayani pelanggan, dan mengelola kasir.</p>
+                    </div>
+                </div>
+                
+                <!-- Experience 2 -->
+                <div class="experience-item scroll-reveal" style="transition-delay: 0.3s;">
+                    <div class="experience-dot"></div>
+                    <div class="ml-6">
+                        <h3 class="text-xl font-semibold text-[#DE4EA5]">Kebab Cendana</h3>
+                        <p class="text-gray-500 mb-2">2021 - 2022</p>
+                        <p class="text-gray-600">Menyiapkan makanan, melayani pelanggan, dan memastikan kebersihan area kerja.</p>
+                    </div>
+                </div>
+                
+                <!-- Experience 3 -->
+                <div class="experience-item scroll-reveal" style="transition-delay: 0.6s;">
+                    <div class="experience-dot"></div>
+                    <div class="ml-6">
+                        <h3 class="text-xl font-semibold text-[#DE4EA5]">Tokkebi - Bigmall Samarinda</h3>
+                        <p class="text-gray-500 mb-2">2022 - 2023</p>
+                        <p class="text-gray-600">Bekerja sebagai staf di restoran Tokkebi, melayani pelanggan, dan membantu operasional harian.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Education & Others Section -->
+    <section id="education" class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Education -->
+                <div class="scroll-reveal">
+                    <h2 class="section-title text-3xl font-bold text-[#DE4EA5]">Pendidikan</h2>
+                    <div class="education-card mb-6">
+                        <h3 class="text-xl font-semibold text-[#DE4EA5]">SMA/Sederajat</h3>
+                        <p class="text-gray-500 mb-2">Lulus 2020</p>
+                        <p class="text-gray-600">Menyelesaikan pendidikan menengah atas dengan baik.</p>
+                    </div>
+                </div>
+                
+                <!-- Hobbies -->
+                <div class="scroll-reveal" style="transition-delay: 0.3s;">
+                    <h2 class="section-title text-3xl font-bold text-[#DE4EA5]">Hobi</h2>
+                    <div class="bg-white p-6 rounded-lg shadow-sm">
+                        <div class="hobby-item">
+                            <div class="hobby-icon">📚</div>
+                            <span>Membaca</span>
+                        </div>
+                        <div class="hobby-item">
+                            <div class="hobby-icon">🎵</div>
+                            <span>Mendengarkan Musik</span>
+                        </div>
+                        <div class="hobby-item">
+                            <div class="hobby-icon">🧁</div>
+                            <span>Memasak</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Languages -->
+                <div class="scroll-reveal" style="transition-delay: 0.6s;">
+                    <h2 class="section-title text-3xl font-bold text-[#DE4EA5]">Bahasa</h2>
+                    <div class="bg-white p-6 rounded-lg shadow-sm">
+                        <div class="mb-4">
+                            <div class="flex justify-between mb-1">
+                                <span>Bahasa Indonesia</span>
+                                <span>Sangat Baik</span>
+                            </div>
+                            <div class="language-progress">
+                                <div class="language-bar" style="width: 0%;" data-width="95%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span>Bahasa Inggris</span>
+                                <span>Dasar</span>
+                            </div>
+                            <div class="language-progress">
+                                <div class="language-bar" style="width: 0%;" data-width="40%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Achievements -->
+                <div class="scroll-reveal" style="transition-delay: 0.9s;">
+                    <h2 class="section-title text-3xl font-bold text-[#DE4EA5]">Prestasi</h2>
+                    <div class="education-card">
+                        <div class="flex items-center gap-3 mb-3">
+                            <div class="w-8 h-8 bg-[#F3ACC1] rounded-full flex items-center justify-center text-white">
+                                🏆
+                            </div>
+                            <h3 class="text-lg font-semibold">Karyawan Terbaik</h3>
+                        </div>
+                        <p class="text-gray-600">Penghargaan karyawan terbaik di Tokkebi Bigmall Samarinda (2023)</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-16 gradient-bg">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-3xl font-bold text-white mb-8">Hubungi Saya</h2>
+            
+            <div class="flex flex-col md:flex-row gap-6 justify-center max-w-xl mx-auto">
+                <a href="mailto:fitri.andriyani@email.com" class="contact-btn w-full">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                    </svg>
+                    <span>Email</span>
+                    <span class="btn-heart">❤️</span>
+                </a>
+                <a href="https://wa.me/6283153584218" class="contact-btn w-full">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                    </svg>
+                    <span>WhatsApp</span>
+                    <span class="btn-heart">❤️</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-8 bg-[#DE4EA5] text-white text-center">
+        <div class="container mx-auto px-4">
+            <p>© 2023 Fitri Nur Andriyani. All rights reserved.</p>
+            <p class="mt-2 text-white/80">Portfolio dibuat dengan ❤️</p>
+        </div>
+    </footer>
+
+    <script>
+        // Create floating hearts
+        function createHearts() {
+            const container = document.querySelector('.floating-hearts');
+            const heartCount = 20;
+            
+            for (let i = 0; i < heartCount; i++) {
+                const heart = document.createElement('div');
+                heart.classList.add('heart');
+                
+                // Random position, size, and delay
+                const left = Math.random() * 100;
+                const size = Math.random() * 0.8 + 0.5; // 0.5 - 1.3
+                const delay = Math.random() * 15;
+                const duration = Math.random() * 10 + 10; // 10-20s
+                
+                heart.style.left = `${left}%`;
+                heart.style.transform = `scale(${size})`;
+                heart.style.animationDuration = `${duration}s`;
+                heart.style.animationDelay = `${delay}s`;
+                
+                container.appendChild(heart);
+            }
+        }
+        
+        // Scroll reveal animation
+        function handleScrollReveal() {
+            const elements = document.querySelectorAll('.scroll-reveal');
+            
+            elements.forEach(el => {
+                const rect = el.getBoundingClientRect();
+                const windowHeight = window.innerHeight;
+                
+                if (rect.top <= windowHeight * 0.85) {
+                    el.classList.add('active');
+                }
+            });
+            
+            // Animate language bars when in view
+            const languageBars = document.querySelectorAll('.language-bar');
+            languageBars.forEach(bar => {
+                const rect = bar.getBoundingClientRect();
+                const windowHeight = window.innerHeight;
+                
+                if (rect.top <= windowHeight * 0.85) {
+                    const width = bar.getAttribute('data-width');
+                    bar.style.width = width;
+                }
+            });
+        }
+        
+        // Photo Gallery Slideshow
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.gallery-slide');
+        const dots = document.querySelectorAll('.gallery-dot');
+        
+        function showSlide(n) {
+            // Hide all slides
+            slides.forEach(slide => {
+                slide.classList.remove('active');
+            });
+            
+            // Remove active class from all dots
+            dots.forEach(dot => {
+                dot.classList.remove('active');
+            });
+            
+            // Set current slide index
+            currentSlide = (n + slides.length) % slides.length;
+            
+            // Show current slide and activate dot
+            slides[currentSlide].classList.add('active');
+            dots[currentSlide].classList.add('active');
+        }
+        
+        function nextSlide() {
+            showSlide(currentSlide + 1);
+        }
+        
+        function prevSlide() {
+            showSlide(currentSlide - 1);
+        }
+        
+        // Add event listeners for gallery navigation
+        document.querySelector('.gallery-next').addEventListener('click', nextSlide);
+        document.querySelector('.gallery-prev').addEventListener('click', prevSlide);
+        
+        // Add event listeners for dots
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                showSlide(index);
+            });
+        });
+        
+        // Auto slide every 5 seconds
+        let slideInterval = setInterval(nextSlide, 5000);
+        
+        // Pause slideshow when hovering over gallery
+        const galleryContainer = document.querySelector('.gallery-container');
+        galleryContainer.addEventListener('mouseenter', () => {
+            clearInterval(slideInterval);
+        });
+        
+        galleryContainer.addEventListener('mouseleave', () => {
+            slideInterval = setInterval(nextSlide, 5000);
+        });
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            createHearts();
+            handleScrollReveal();
+            initThreeJS();
+            
+            // Add scroll event listener
+            window.addEventListener('scroll', handleScrollReveal);
+        });
+
+        // Three.js Butterfly Animation
+        function initThreeJS() {
+            // Create scene, camera, and renderer
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            const renderer = new THREE.WebGLRenderer({ 
+                canvas: document.getElementById('butterfly-canvas'),
+                alpha: true 
+            });
+            
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setClearColor(0x000000, 0); // Transparent background
+            
+            // Add ambient light
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+            scene.add(ambientLight);
+            
+            // Add directional light
+            const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+            directionalLight.position.set(0, 10, 10);
+            scene.add(directionalLight);
+            
+            // Create butterfly wings
+            function createButterfly(x, y, z, wingColor) {
+                const butterflyGroup = new THREE.Group();
+                
+                // Create wings
+                const wingGeometry = new THREE.BufferGeometry();
+                
+                // Wing shape (heart-like shape for butterfly wings)
+                const wingShape = [];
+                for (let i = 0; i < Math.PI * 2; i += 0.1) {
+                    const x = 0.8 * Math.sin(i) * Math.sin(i) * Math.sin(i);
+                    const y = 0.8 * Math.cos(i) - 0.2 * Math.cos(2 * i) - 0.1 * Math.cos(3 * i) - 0.05 * Math.cos(4 * i);
+                    wingShape.push(new THREE.Vector3(x, y, 0));
+                }
+                
+                // Create left wing
+                const leftWingPoints = wingShape.map(p => new THREE.Vector3(p.x, p.y, p.z));
+                const leftWingGeometry = new THREE.BufferGeometry().setFromPoints(leftWingPoints);
+                const leftWingMaterial = new THREE.MeshBasicMaterial({ 
+                    color: wingColor,
+                    side: THREE.DoubleSide,
+                    transparent: true,
+                    opacity: 0.8
+                });
+                const leftWing = new THREE.Mesh(leftWingGeometry, leftWingMaterial);
+                leftWing.scale.set(1.5, 1.5, 1.5);
+                leftWing.position.set(-0.5, 0, 0);
+                
+                // Create right wing (mirror of left wing)
+                const rightWingPoints = wingShape.map(p => new THREE.Vector3(-p.x, p.y, p.z));
+                const rightWingGeometry = new THREE.BufferGeometry().setFromPoints(rightWingPoints);
+                const rightWingMaterial = new THREE.MeshBasicMaterial({ 
+                    color: wingColor,
+                    side: THREE.DoubleSide,
+                    transparent: true,
+                    opacity: 0.8
+                });
+                const rightWing = new THREE.Mesh(rightWingGeometry, rightWingMaterial);
+                rightWing.scale.set(1.5, 1.5, 1.5);
+                rightWing.position.set(0.5, 0, 0);
+                
+                // Create butterfly body
+                const bodyGeometry = new THREE.CylinderGeometry(0.05, 0.05, 1, 8);
+                const bodyMaterial = new THREE.MeshBasicMaterial({ color: 0x333333 });
+                const body = new THREE.Mesh(bodyGeometry, bodyMaterial);
+                body.rotation.x = Math.PI / 2;
+                body.scale.set(0.5, 0.5, 0.5);
+                
+                // Add wings and body to butterfly group
+                butterflyGroup.add(leftWing);
+                butterflyGroup.add(rightWing);
+                butterflyGroup.add(body);
+                
+                // Position the butterfly
+                butterflyGroup.position.set(x, y, z);
+                
+                // Add animation properties
+                butterflyGroup.userData = {
+                    wingSpeed: 0.1 + Math.random() * 0.2,
+                    flySpeed: 0.01 + Math.random() * 0.02,
+                    rotationSpeed: 0.005 + Math.random() * 0.01,
+                    wingAngle: Math.random() * Math.PI * 2,
+                    targetX: Math.random() * 20 - 10,
+                    targetY: Math.random() * 10 - 5,
+                    targetZ: Math.random() * 10 - 5,
+                    changeTargetTime: 0
+                };
+                
+                scene.add(butterflyGroup);
+                return butterflyGroup;
+            }
+            
+            // Create multiple butterflies
+            const butterflies = [];
+            const butterflyColors = [0xF3ACC1, 0xDE4EA5, 0xF8B0CC, 0xC7F0DB];
+            
+            for (let i = 0; i < 10; i++) {
+                const x = Math.random() * 20 - 10;
+                const y = Math.random() * 10 - 5;
+                const z = Math.random() * 10 - 15;
+                const colorIndex = Math.floor(Math.random() * butterflyColors.length);
+                const butterfly = createButterfly(x, y, z, butterflyColors[colorIndex]);
+                butterflies.push(butterfly);
+            }
+            
+            // Position camera
+            camera.position.z = 15;
+            
+            // Animation loop
+            function animate() {
+                requestAnimationFrame(animate);
+                
+                // Animate each butterfly
+                butterflies.forEach(butterfly => {
+                    const data = butterfly.userData;
+                    
+                    // Wing flapping animation
+                    data.wingAngle += data.wingSpeed;
+                    butterfly.children[0].rotation.y = Math.sin(data.wingAngle) * 0.5; // Left wing
+                    butterfly.children[1].rotation.y = -Math.sin(data.wingAngle) * 0.5; // Right wing
+                    
+                    // Change target position periodically
+                    data.changeTargetTime += 0.01;
+                    if (data.changeTargetTime > 5) {
+                        data.targetX = Math.random() * 20 - 10;
+                        data.targetY = Math.random() * 10 - 5;
+                        data.targetZ = Math.random() * 10 - 15;
+                        data.changeTargetTime = 0;
+                    }
+                    
+                    // Move towards target position
+                    butterfly.position.x += (data.targetX - butterfly.position.x) * data.flySpeed;
+                    butterfly.position.y += (data.targetY - butterfly.position.y) * data.flySpeed;
+                    butterfly.position.z += (data.targetZ - butterfly.position.z) * data.flySpeed;
+                    
+                    // Rotate butterfly to face movement direction
+                    const dx = data.targetX - butterfly.position.x;
+                    const dy = data.targetY - butterfly.position.y;
+                    const dz = data.targetZ - butterfly.position.z;
+                    
+                    if (Math.abs(dx) > 0.1 || Math.abs(dy) > 0.1) {
+                        const targetRotationY = Math.atan2(dx, dz);
+                        const targetRotationX = Math.atan2(dy, Math.sqrt(dx * dx + dz * dz));
+                        
+                        // Smooth rotation
+                        butterfly.rotation.y += (targetRotationY - butterfly.rotation.y) * 0.05;
+                        butterfly.rotation.x += (targetRotationX - butterfly.rotation.x) * 0.05;
+                    }
+                });
+                
+                renderer.render(scene, camera);
+            }
+            
+            // Handle window resize
+            window.addEventListener('resize', () => {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            });
+            
+            // Start animation
+            animate();
+        }
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'93d0ef77c6c9290d',t:'MTc0Njc5MDk2OC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
